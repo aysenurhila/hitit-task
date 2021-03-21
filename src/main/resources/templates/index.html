@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Contacts</title>
+</head>
+<body>
+<div align="center">
+    <h1>Contact List</h1>
+    <a href="/new">Create New Contact</a>
+    <br/><br/>
+
+    <table border="1" cellpadding="10" id="contacts">
+        <thead>
+        <tr>
+            <th>Contact Id</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Gender</th>
+            <th>Phone Number</th>
+        </tr>
+        </thead>
+        <tbody id="data-container">
+        <tr th:if="${#lists.isEmpty(list)}">
+            <td colspan="2"> Kişiler bulunamadı</td>
+        </tr>
+        <tr style="display: none" th:include="contact_list::list_fragment(list=${list})"></tr>
+        </tbody>
+    </table>
+</div>
+</body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous"></script>
+<script>
+    $(document).on('click', '.button_delete', function () {
+        const contactId = $(this).data('contact-id');
+        const url = 'delete/' + contactId;
+
+        $.ajax({
+            method: 'DELETE',
+            url: url,
+            dataType: 'html',
+            success: function (response) {
+                $('#data-container').html(response);
+            },
+            error: function () {
+                alert("Something went wrong on ajax request.");
+            }
+        })
+    });
+</script>
+</html>

@@ -1,0 +1,14 @@
+<th:block xmlns:th="http://thymeleaf.org" th:fragment="list_fragment">
+    <tr th:each="contact : ${list}">
+        <td> <span th:text="${contact.id}">Contact Id</span></td>
+        <td> <span th:text="${contact.firstName}"> First Name </span></td>
+        <td> <span th:text="${contact.lastName}"> Last Name </span></td>
+        <td> <span th:text="${contact.gender}"> Gender </span></td>
+        <td> <span th:text="${contact.phoneNumber}"> Phone Number </span></td>
+        <td>
+            <a th:href="@{/updateContact/{id}(id=${contact.id})}">Edit</a>
+            &nbsp;&nbsp&nbsp;
+            <button class="button_delete" th:data-contact-id="${contact.id}">Delete</button>
+        </td>
+    </tr>
+</th:block>
